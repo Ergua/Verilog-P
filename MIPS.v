@@ -161,7 +161,7 @@ module MIPS (
     wire [4:0] EX_MEM_RD;
     wire [1:0] Forward_CtlA;
     wire [1:0] Forward_CtlB;
-    wire [1:0] FwdC;
+
     assign ID_EX_RT = Instr1_IDEXE[20:16];
     assign ID_EX_RS = Instr1_IDEXE[25:21];
     assign EX_MEM_RD = Instr1_EXEMEM[15:11];
