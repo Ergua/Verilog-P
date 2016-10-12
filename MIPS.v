@@ -155,6 +155,29 @@ module MIPS (
 		.SYS(SYS),
 		.WANT_FREEZE(STALL_IDIF)
 	);
+
+    wire [4:0] ID_EX_RT;
+    wire [4:0] ID_EX_RS;
+    wire [4:0] EX_MEM_RD;
+    wire [1:0] Forward_CtlA;
+    wire [1:0] Forward_CtlB;
+    wire [1:0] FwdC;
+    assign ID_EX_RT = Instr1_IDEXE[20:16];
+    assign ID_EX_RS = Instr1_IDEXE[25:21];
+    assign EX_MEM_RD = Instr1_EXEMEM[15:11];
+
+
+    ForwardUnit ForwardUnit(
+        .CLK(CLK),
+        .ID_EX_RT(ID_EX_RT),
+        .ID_EX_RS(ID_EX_RS),
+        .EX_MEM_RD(EX_MEM_RD),
+        .MEM_WB_RD(WriteRegister1_MEMWB),
+        .forwardA(Forward_CtlA),
+        .forwardB(Forward_CtlB),
+        .EX_MEM_RegWrite(RegWrite1_EXEMEM),
+        .MEM_WB_RegWrite(RegWrite1_MEMWB)
+        );
 	
 	wire [31:0] Instr1_EXEMEM;
 	wire [31:0] Instr1_PC_EXEMEM;
@@ -188,7 +211,12 @@ module MIPS (
 		.RegWrite1_OUT(RegWrite1_EXEMEM),
 		.ALU_Control1_OUT(ALU_Control1_EXEMEM),
 		.MemRead1_OUT(MemRead1_EXEMEM),
-		.MemWrite1_OUT(MemWrite1_EXEMEM)
+		.MemWrite1_OUT(MemWrite1_EXEMEM),
+        //ADDED
+        .FwdMuxA(Forward_CtlA),
+        .FwdMuxB(Forward_CtlB),
+        .Fwd_MEMWrite_IN(Instr1_EXEMEM),
+        .Fwd_WBData_IN(WriteData1_MEMWB)
 	);
 	
      

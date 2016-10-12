@@ -90,30 +90,30 @@ module ID(
 	 wire			sign_or_zero_Flag1;	//If 1, we use sign-extended immediate; otherwise, 0-extended immediate.
 	 wire			syscal1;			//If this instruction is a syscall
 	 wire			comment1;
-	 assign		comment1 = 1;
+	 assign			comment1 = 1;
 	 
 	 wire			Request_Alt_PC1;	//Do we want to branch/jump?
-	 wire	[31:0]	Alt_PC1;	//address to which we branch/jump
+	 wire [31:0]	Alt_PC1;	//address to which we branch/jump
 	 
 	 wire [4:0]		RegA1;		//Register A
 	 wire [4:0]		RegB1;		//Register B
 	 wire [4:0]		WriteRegister1;	//Register to write
 	 wire [31:0]	WriteRegisterRawVal1;
 	 wire [31:0]	MemWriteData1;		//Data to write to memory
-	 wire	[31:0]	OpA1;		//Operand A
+	 wire [31:0]	OpA1;		//Operand A
 	 wire [31:0]	OpB1;		//Operand B
 	 
      wire [4:0]     rs1;     //also format1
      wire [31:0]    rsRawVal1;
-     wire   [31:0]  rsval1;
-     wire   [4:0]       rt1;
+     wire [31:0]  	rsval1;
+     wire [4:0]     rt1;
      wire [31:0]    rtRawVal1;
-     wire   [31:0]  rtval1;
+     wire [31:0]  	rtval1;
      wire [4:0]     rd1;
      wire [4:0]     shiftAmount1;
      wire [15:0]    immediate1;
 
-	reg [2:0]	syscall_bubble_counter;
+	 reg [2:0]	syscall_bubble_counter;
 	
 	 
 	 
@@ -124,6 +124,7 @@ module ID(
      assign immediate1 = Instr1_IN[15:0];
 
 //Begin branch/jump calculation
+
 	
 	wire [31:0] rsval_jump1;
 	

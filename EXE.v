@@ -60,10 +60,19 @@ module EXE(
     //We need to read from MEM (passed to MEM)
     output reg MemRead1_OUT,
     //We need to write to MEM (passed to MEM)
-    output reg MemWrite1_OUT
+    output reg MemWrite1_OUT,
+
+    //ADDED Inputs
+    input [1:0] FwdMuxA,
+    input [1:0] FwdMuxB,
+    input [31:0] Fwd_MEMWrite_IN,
+    input [31:0] Fwd_WBData_IN
     
     );
 	 
+    localparam NO_HAZARD   = 2'b00;
+    localparam EX_HAZARD   = 2'b10;
+    localparam MEM_HAZARD  = 2'b01;
 
 	 wire [31:0] A1;
 	 wire [31:0] B1;
@@ -71,9 +80,10 @@ module EXE(
 	 	 
 	 wire comment1;
 	 assign comment1 = 1;
-	 
-assign A1 = OperandA1_IN;
-assign B1 = OperandB1_IN;
+
+     //Add forward result
+	 assign A1 = (FwdMuxA == EX_HAZARD || FwdMuxA == MEM_HAZARD) ? (FwdMuxA == EX_HAZARD ? Fwd_MEMWrite_IN : Fwd_WBData_IN) : OperandA1_IN;
+     assign B1 = (FwdMuxB == EX_HAZARD || FwdMuxB == MEM_HAZARD) ? (FwdMuxB == EX_HAZARD ? Fwd_MEMWrite_IN : Fwd_WBData_IN) : OperandB1_IN;
 
 reg [31:0] HI/*verilator public*/;
 reg [31:0] LO/*verilator public*/;
