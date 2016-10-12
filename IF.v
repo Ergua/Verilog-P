@@ -36,7 +36,7 @@ module  IF
     assign IncrementAmount = 32'd4; //NB: This might get modified for superscalar.
     
     //assign Instr_address_2IM = Instr_PC_Plus4;  //Are you sure that this is correct?
-    assign Instr_address_2IM = Request_Alt_PC ? Instr_PC_Plus4 : Alt_PC;  //banrch or not?
+    assign Instr_address_2IM = Request_Alt_PC ? Alt_PC : Instr_PC_Plus4;  //banrch or not?
 
 always @(posedge CLK or negedge RESET) begin
     if(!RESET) begin
